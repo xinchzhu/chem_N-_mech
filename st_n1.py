@@ -3,9 +3,10 @@ import matplotlib.pyplot as plt
 import time
 import cantera as ct
 
-######################
-#Parameters to modify#
-######################
+#######################
+#shocktube for cantera#
+#Parameters to modify##
+#######################
 spec = 'C2H4'	#species
 equiv = 1.0		#Phi
 pressu = 30 	#pressure integer
