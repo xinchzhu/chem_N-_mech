@@ -61,7 +61,7 @@ for i, tempu in enumerate(T_r):
     print('Ignition Delay: {:.3} ms for T={}K. Cpu time: {:3.2f}s'.format(tau*1000, tempu, t1-t0))
 
 out = open('IDTs_%s_Phi%.1f_P%i.out'%(spec,equiv,pressu),'w')
-out.write('p\tT\t1000/T\tidt(s)\n')
+out.write('p\tT\t1000/T\tidt(ms)\n')
 for i, T in enumerate(T_r):
 	over_T = 1000.0 / T
 	out.write('%i\t%f\t%f\n'%(T,over_T,IDTs[i]*1000))
