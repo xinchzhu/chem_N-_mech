@@ -1,0 +1,1 @@
+./export_contour.plt can be exported from Chemkin graphic interface and should be modified according to the file in this example 
