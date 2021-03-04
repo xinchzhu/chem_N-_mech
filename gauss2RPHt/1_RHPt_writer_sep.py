@@ -1,6 +1,7 @@
 import sys
 import linecache
 import pandas 
+import re
 
 f = open('irc.log', 'r')
 linecounts = 0
@@ -91,8 +92,9 @@ for i in range(0,len(indx_a1)):
         startp = indx_a1[i]
         endp = indx_a2[i]
         if (index_out1 > startp) and (index_out1 < endp):
-            #print (line)
-            opt_hess.write(line)
+            #print 
+            replace_lines = re.sub('D', 'E', line)
+            opt_hess.write(replace_lines)
     opt_hess.close()    
 ###Hessian output ends
 
