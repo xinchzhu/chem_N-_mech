@@ -2,6 +2,9 @@ import sys
 import linecache
 import pandas 
 import re
+import os
+
+os.makedirs ('./irc_files')
 
 f = open('irc.log', 'r')
 linecounts = 0
@@ -44,8 +47,8 @@ for line in f.readlines():
         print ('gradient end: %d'%linecounts)
         gradient_counter2 =  linecounts - 1
         indx_c2.append(gradient_counter2)
-##--------------------------------------------        
-    if 'E(UM062X)' in line:
+##--------------------------------------------   E(UBHandHLYP)     
+    if 'E(UBHandHLYP)' in line:
         indx_e.append(linecounts)
 f.close()
 
@@ -68,6 +71,10 @@ print ('Geometry ends')
 len_b2 = len(indx_b2)
 print(len_b2)
 #print (indx_b2)
+
+indx_irc = open('./irc_files/irc_steps.rwf','w')
+indx_irc.write('%d'%len_a1)
+indx_irc.close()
 
 ##test gradient
 print ('gradient starts')
@@ -142,14 +149,32 @@ for i in range(0,len(indx_e)):
         if (index_out1 == startp):
             #print (line)
             ene_split = line.split ('  ')
-            #print (ene_split)
-            #len_ene = len(ene_split)
-            #print (len_ene)
             print (ene_split[2])
             opt_ene.write('%s\n'%ene_split[2])
             #opt_ene.write(line) 
 opt_ene.close()    
         
+		
+		
+for i in range(0,len(indx_a1)):
+    link1 = open('RPHt_input_header.dat','r')
+    link2 = open('./irc_files/geo_%d.dat'%i, 'r')
+    link3 = open('./irc_files/gradient_%d.dat'%i, 'r')
+    link4 = open('./irc_files/hessian_%d.dat'%i, 'r')
+    os.makedirs ('./irc_files/RPHt_%s'%i)
+    file_link = open('./irc_files/RPHt_%s/RPHt_input_data.dat'%i,'w')
+    #file_link.write(' Hessian\n')
+    index_out1 = 0
+    for line in link1.readlines():
+        file_link.write(line)
+    for line in link2.readlines():
+        file_link.write(line)
+    for line in link3.readlines():
+        file_link.write(line)
+    for line in link4.readlines():
+        file_link.write(line)
+    file_link.close()    
+
 #df_ene = pd.read_csv('energy.dat',engine='python')
 
 '''

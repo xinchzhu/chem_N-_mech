@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('./irc_files/energy.dat',sep='\t\t', header=None, engine='python')
 df_2= pd.read_csv('gauss2projrot.inp',engine='python')
 ts_ene = df_2.iloc[0,0]
-##读取energy表格数据，没有列名称，以双制表符分割
+##读取energy表格数据，没有列名称，以双制表符分割 以空格分列：delim_whitespace = True
 
 #过渡态能量HF
 init_ene = df.iloc[0,1] ## 0行1列 （第一行第二列） 
@@ -18,7 +18,7 @@ irc_ene_kcal = []
 for i in range (len(df)):
     irc_ene_hf.append (df.iloc [i,1])  ##向数组中添加元素
     
-print (irc_ene_hf)
+#print (irc_ene_hf)
 
 for i in range(len(irc_ene_hf)):
     irc_ene_kcal.append(627.5*(irc_ene_hf[i] - init_ene))
@@ -31,7 +31,7 @@ irc_ene_kcal_corr = 0
 for x in range(len(irc_ene_kcal)):
     irc_ene_kcal_corr = irc_ene_kcal[x] + ts_ene
     f_out.write ('E%d\t\t%s\n'%(x,irc_ene_kcal_corr))
-
+    print (irc_ene_kcal_corr)
 
 '''
     # 使用DataFrame 和 iloc 进行单行/列的选择
