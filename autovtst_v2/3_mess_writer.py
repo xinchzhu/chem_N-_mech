@@ -73,20 +73,27 @@ for i in range (0,energy_frame.shape[0]):
 #####筛选频率 并计算zpe
 ZPVE_har_out = []  #
 for steps_vtst in range(0, irc_steps):
-    ZPVE_har = 0
     freq_temp = pd.read_csv('./irc_files/RPHt_%d/hrproj_freq.dat' % steps_vtst, delim_whitespace=True, header=None,
                             engine='python')
     freq_clean = pd.DataFrame(data=[])
     for i in range(0, freq_temp.shape[0]):
         if freq_temp.iloc[i, 0] > 0.0:
-            ZPVE_har += freq_temp.iloc[i, 0]
         #累加频率 保留数值为正的频率
             freq_clean = freq_clean.append(freq_temp.iloc[i])
     # time.sleep(1)
     freq_clean.to_csv('./mess_files/freq_temp_%d' % steps_vtst, float_format='%.2f', index=False, header=False, )
-    ZPVE_har_out.append(ZPVE_har * 0.5 * 2.8591 / 1000) #得到单个irc点的ZPE
 # print(ZPVE_har_out)
-print(ZPVE_har_out[0])
+
+for steps_vtst in range(0, irc_steps):
+    ZPVE_har = 0
+    freq_temp_zpe = pd.read_csv('./irc_files/RPHt_%d/RTproj_freq.dat' % steps_vtst, delim_whitespace=True, header=None,
+                            engine='python')
+    for i in range(0, freq_temp_zpe.shape[0]):
+        if freq_temp_zpe.iloc[i, 0] >= 0.0:
+            ZPVE_har += freq_temp_zpe.iloc[i, 0]
+    ZPVE_har_out.append(ZPVE_har * 0.5 * 2.8591 / 1000) #得到单个irc点的ZPE
+
+print(ZPVE_har_out)
 # print (len(ZPVE_har_out))
 delta_irc_zpve = []
 for i in range(0, len(ZPVE_har_out)):
@@ -112,7 +119,7 @@ time.sleep(1)
 freq_0_parse = pd.read_csv('./mess_files/freq_temp_0', header=None, engine='python')
 freqs = freq_0_parse.shape[0]
 
-img_freq_parse = pd.read_csv('./mess_files/debug/freq_debug_0', header=None, engine='python')
+img_freq_parse = pd.read_csv('./irc_files/RPHt_0/RTproj_freq.dat', header=None, engine='python')
 img_freq_0 = img_freq_parse.iloc[-1, 0]  #确定虚频 即过渡态的最后一个频率的相反数
 img_freq = (-1) * img_freq_0
 
