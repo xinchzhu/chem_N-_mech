@@ -1,2 +1,1 @@
-# buaa-ckc
-run .py script at the directory where it is
+# chemical analysis and mechanism application
